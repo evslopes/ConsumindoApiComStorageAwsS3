@@ -1,13 +1,11 @@
 package br.edu.infnet.model.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Endereco {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String cep;
     private String logradouro;
@@ -15,6 +13,9 @@ public class Endereco {
     private String bairro;
     private String localidade;
     private String uf;
+
+    public Endereco() {
+    }
 
     public String getCep() {
         return cep;

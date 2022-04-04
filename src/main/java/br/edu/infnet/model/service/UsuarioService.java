@@ -14,7 +14,7 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     public Usuario autenticacao(String email, String senha){
-        return usuarioRepository.autenticacao(email,senha);
+        return usuarioRepository.autenticacao(email, senha);
     }
 
     public Usuario incluir(Usuario usuario){
@@ -22,16 +22,16 @@ public class UsuarioService {
         return usuario;
     }
 
-    public Collection<Usuario> obterLista(){
-        return (Collection<Usuario>) usuarioRepository.findAll();
+    public void excluir(Integer id) {
+        usuarioRepository.deleteById(id);
     }
 
-    public Usuario obterPorId(Integer id){
+    public Usuario obterPorId(Integer id) {
         return usuarioRepository.findById(id).orElse(null);
     }
 
-    public void excluir(Integer id){
-        usuarioRepository.deleteById(id);
+    public Collection<Usuario> obterLista(){
+        return (Collection<Usuario>) usuarioRepository.findAll();
     }
 
 }

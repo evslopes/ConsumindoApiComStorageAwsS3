@@ -25,8 +25,10 @@ public class UsuarioLoader implements ApplicationRunner {
         endereco.setUf("UF");
 
         Usuario usuario = new Usuario();
-        usuario.setNome("Elberth Moraes");
-        usuario.setEmail("elberth@elberth.com");
+        usuario.setNome("Teste");
+        usuario.setEmail("teste@teste.com");
+        usuario.setSenha("teste123");
+        usuario.setTelefone("(21) 9999-9999");
 
         usuario.setEndereco(endereco);
 

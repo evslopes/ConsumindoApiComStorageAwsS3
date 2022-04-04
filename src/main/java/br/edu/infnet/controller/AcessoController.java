@@ -47,7 +47,7 @@ public class AcessoController {
         if(usuario != null) {
             model.addAttribute("user", usuario);
 
-            return "redirect:/";
+            return "redirect:/usuarios";
         } else {
             model.addAttribute(
                     "mensagem",

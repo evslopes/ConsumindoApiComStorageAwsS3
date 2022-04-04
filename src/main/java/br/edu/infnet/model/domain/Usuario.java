@@ -6,18 +6,24 @@ import javax.persistence.*;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Integer id;
-
     private String nome;
     private String email;
+    private String senha;
     private String telefone;
-    private String CEP;
-    @ManyToOne
-    @JoinColumn(name = "endereco_id")
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "idendereco")
     private Endereco endereco;
 
     public Usuario() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -36,6 +42,14 @@ public class Usuario {
         this.email = email;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     public String getTelefone() {
         return telefone;
     }
@@ -44,13 +58,6 @@ public class Usuario {
         this.telefone = telefone;
     }
 
-    public String getCEP() {
-        return CEP;
-    }
-
-    public void setCEP(String CEP) {
-        this.CEP = CEP;
-    }
 
     public Endereco getEndereco() {
         return endereco;
@@ -59,5 +66,6 @@ public class Usuario {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
+
 }
 

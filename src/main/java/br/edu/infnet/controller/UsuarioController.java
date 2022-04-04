@@ -1,31 +1,61 @@
 package br.edu.infnet.controller;
 
+import br.edu.infnet.model.domain.Endereco;
 import br.edu.infnet.model.domain.Usuario;
 import br.edu.infnet.model.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/usuarios")
+@Controller
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
 
-    @PostMapping(value = "usuario/incluir")
-    public ResponseEntity incluir(@RequestBody Usuario usuario){
-        ResponseEntity resposta = ResponseEntity.notFound().build();
-
-        if (usuario != null && usuario.getId() == null){
-            Usuario registrado = usuarioService.incluir(usuario);
-            resposta = ResponseEntity.status(HttpStatus.CREATED).body(registrado);
-        }
-        return resposta;
+    @GetMapping(value = "/usuario")
+    public String telaCadastro() {
+        return "cep/buscarCep";
     }
+
+    @PostMapping(value = "/usuario/incluir")
+    public String incluir(Usuario usuario, Endereco endereco){
+
+        usuario.setEndereco(endereco);
+
+        usuarioService.incluir(usuario);
+
+        return "redirect:/";
+    }
+
+    @GetMapping(value = "/usuarios")
+    public String telaLista(Model model) {
+
+        model.addAttribute("usuarioLista", usuarioService.obterLista());
+
+        return "usuario/lista";
+    }
+
+    @GetMapping(value = "/usuario/{id}/excluir")
+    public String excluir(Model model, @PathVariable Integer id) {
+
+        Usuario usuario = usuarioService.obterPorId(id);
+
+        if(usuario != null) {
+            usuarioService.excluir(id);
+
+            model.addAttribute("mensagem", "O usuário "+usuario.getNome()+" foi excluído com sucesso!!!");
+        } else {
+            model.addAttribute("mensagem", "Usuário inexistente.. impossível realizar a exclusão!!!");
+        }
+
+        return telaLista(model);
+    }
+
+
+
 
 }
